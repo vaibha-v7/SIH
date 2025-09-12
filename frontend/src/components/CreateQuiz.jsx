@@ -1,24 +1,26 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { quizAPI } from '../services/api';
-import { ArrowLeft, Plus, Trash2, Save } from 'lucide-react';
+"use client";
+
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { quizAPI } from "../services/api";
+import { ArrowLeft, Plus, Trash2, Save } from "lucide-react";
 
 const CreateQuiz = () => {
   const navigate = useNavigate();
   const { user, userRole } = useAuth();
   const [quiz, setQuiz] = useState({
-    title: '',
+    title: "",
     questions: [
       {
-        question: '',
-        options: ['', '', '', ''],
-        answer: 0
-      }
-    ]
+        question: "",
+        options: ["", "", "", ""],
+        answer: 0,
+      },
+    ],
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const addQuestion = () => {
     setQuiz({
@@ -26,11 +28,11 @@ const CreateQuiz = () => {
       questions: [
         ...quiz.questions,
         {
-          question: '',
-          options: ['', '', '', ''],
-          answer: 0
-        }
-      ]
+          question: "",
+          options: ["", "", "", ""],
+          answer: 0,
+        },
+      ],
     });
   };
 
@@ -38,7 +40,7 @@ const CreateQuiz = () => {
     if (quiz.questions.length > 1) {
       setQuiz({
         ...quiz,
-        questions: quiz.questions.filter((_, i) => i !== index)
+        questions: quiz.questions.filter((_, i) => i !== index),
       });
     }
   };
@@ -47,11 +49,11 @@ const CreateQuiz = () => {
     const updatedQuestions = [...quiz.questions];
     updatedQuestions[index] = {
       ...updatedQuestions[index],
-      [field]: value
+      [field]: value,
     };
     setQuiz({
       ...quiz,
-      questions: updatedQuestions
+      questions: updatedQuestions,
     });
   };
 
@@ -60,18 +62,18 @@ const CreateQuiz = () => {
     updatedQuestions[questionIndex].options[optionIndex] = value;
     setQuiz({
       ...quiz,
-      questions: updatedQuestions
+      questions: updatedQuestions,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     // Validate quiz
     if (!quiz.title.trim()) {
-      setError('Quiz title is required');
+      setError("Quiz title is required");
       setLoading(false);
       return;
     }
@@ -83,8 +85,8 @@ const CreateQuiz = () => {
         setLoading(false);
         return;
       }
-      
-      const hasEmptyOptions = question.options.some(option => !option.trim());
+
+      const hasEmptyOptions = question.options.some((option) => !option.trim());
       if (hasEmptyOptions) {
         setError(`All options for question ${i + 1} are required`);
         setLoading(false);
@@ -93,14 +95,16 @@ const CreateQuiz = () => {
     }
 
     try {
-      console.log('Creating quiz with data:', quiz);
-      console.log('User role:', userRole);
+      console.log("Creating quiz with data:", quiz);
+      console.log("User role:", userRole);
       const result = await quizAPI.createQuiz(quiz);
-      console.log('Quiz created successfully:', result);
-      navigate('/dashboard');
+      console.log("Quiz created successfully:", result);
+      navigate("/dashboard");
     } catch (error) {
-      console.error('Quiz creation error:', error);
-      setError(error.response?.data?.error || error.message || 'Failed to create quiz');
+      console.error("Quiz creation error:", error);
+      setError(
+        error.response?.data?.error || error.message || "Failed to create quiz"
+      );
     } finally {
       setLoading(false);
     }
@@ -119,10 +123,13 @@ const CreateQuiz = () => {
             Back to Dashboard
           </Link>
           <h1 className="text-3xl font-bold text-gray-900">Create New Quiz</h1>
-          <p className="text-gray-600 mt-2">Design an interactive quiz for other learners</p>
+          <p className="text-gray-600 mt-2">
+            Design an interactive quiz for other learners
+          </p>
           {userRole && (
             <div className="mt-2 text-sm text-indigo-600">
-              Logged in as: <span className="font-medium capitalize">{userRole}</span>
+              Logged in as:{" "}
+              <span className="font-medium capitalize">{userRole}</span>
             </div>
           )}
         </div>
@@ -136,7 +143,10 @@ const CreateQuiz = () => {
 
           {/* Quiz Title */}
           <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Quiz Title
             </label>
             <input
@@ -153,7 +163,10 @@ const CreateQuiz = () => {
           {/* Questions */}
           <div className="space-y-6">
             {quiz.questions.map((question, questionIndex) => (
-              <div key={questionIndex} className="bg-white rounded-lg shadow-sm border p-6">
+              <div
+                key={questionIndex}
+                className="bg-white rounded-lg shadow-sm border p-6"
+              >
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-lg font-semibold text-gray-900">
                     Question {questionIndex + 1}
@@ -176,7 +189,9 @@ const CreateQuiz = () => {
                   </label>
                   <textarea
                     value={question.question}
-                    onChange={(e) => updateQuestion(questionIndex, 'question', e.target.value)}
+                    onChange={(e) =>
+                      updateQuestion(questionIndex, "question", e.target.value)
+                    }
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     placeholder="Enter your question"
                     rows={3}
@@ -196,13 +211,21 @@ const CreateQuiz = () => {
                           type="radio"
                           name={`question-${questionIndex}`}
                           checked={question.answer === optionIndex}
-                          onChange={() => updateQuestion(questionIndex, 'answer', optionIndex)}
+                          onChange={() =>
+                            updateQuestion(questionIndex, "answer", optionIndex)
+                          }
                           className="mr-3 text-indigo-600 focus:ring-indigo-500"
                         />
                         <input
                           type="text"
                           value={option}
-                          onChange={(e) => updateOption(questionIndex, optionIndex, e.target.value)}
+                          onChange={(e) =>
+                            updateOption(
+                              questionIndex,
+                              optionIndex,
+                              e.target.value
+                            )
+                          }
                           className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                           placeholder={`Option ${optionIndex + 1}`}
                           required
@@ -238,7 +261,7 @@ const CreateQuiz = () => {
               className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Save className="h-5 w-5 mr-2" />
-              {loading ? 'Creating Quiz...' : 'Create Quiz'}
+              {loading ? "Creating Quiz..." : "Create Quiz"}
             </button>
           </div>
         </form>

@@ -1,26 +1,28 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { ArrowLeft, User, Save, Edit3 } from 'lucide-react';
+"use client";
+
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { ArrowLeft, User, Save } from "lucide-react";
 
 const Profile = () => {
   const navigate = useNavigate();
   const { user, updateProfile } = useAuth();
   const [formData, setFormData] = useState({
-    name: '',
-    bio: '',
-    avatar: ''
+    name: "",
+    bio: "",
+    avatar: "",
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   useEffect(() => {
     if (user) {
       setFormData({
-        name: user.name || '',
-        bio: user.bio || '',
-        avatar: user.avatar || ''
+        name: user.name || "",
+        bio: user.bio || "",
+        avatar: user.avatar || "",
       });
     }
   }, [user]);
@@ -28,24 +30,24 @@ const Profile = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     const result = await updateProfile(formData);
-    
+
     if (result.success) {
-      setSuccess('Profile updated successfully!');
+      setSuccess("Profile updated successfully!");
     } else {
       setError(result.error);
     }
-    
+
     setLoading(false);
   };
 
@@ -53,7 +55,9 @@ const Profile = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Please log in to view your profile</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            Please log in to view your profile
+          </h2>
           <Link to="/login" className="text-indigo-600 hover:text-indigo-700">
             Go to Login
           </Link>
@@ -127,7 +131,10 @@ const Profile = () => {
 
             {/* Name */}
             <div className="mb-6">
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Full Name
               </label>
               <input
@@ -143,7 +150,10 @@ const Profile = () => {
 
             {/* Bio */}
             <div className="mb-6">
-              <label htmlFor="bio" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="bio"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Bio
               </label>
               <textarea
@@ -159,10 +169,16 @@ const Profile = () => {
 
             {/* Account Info */}
             <div className="mb-6 p-4 bg-gray-50 rounded-md">
-              <h3 className="text-sm font-medium text-gray-700 mb-2">Account Information</h3>
+              <h3 className="text-sm font-medium text-gray-700 mb-2">
+                Account Information
+              </h3>
               <div className="space-y-2 text-sm text-gray-600">
-                <p><span className="font-medium">Username:</span> {user.username}</p>
-                <p><span className="font-medium">Email:</span> {user.email}</p>
+                <p>
+                  <span className="font-medium">Username:</span> {user.username}
+                </p>
+                <p>
+                  <span className="font-medium">Email:</span> {user.email}
+                </p>
               </div>
             </div>
 
@@ -174,7 +190,7 @@ const Profile = () => {
                 className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Save className="h-5 w-5 mr-2" />
-                {loading ? 'Saving...' : 'Save Changes'}
+                {loading ? "Saving..." : "Save Changes"}
               </button>
             </div>
           </form>

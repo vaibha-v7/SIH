@@ -1,8 +1,16 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { quizAPI } from '../services/api';
-import { ArrowLeft, CheckCircle, XCircle, RotateCcw, AlertTriangle } from 'lucide-react';
+"use client";
+
+import { useState, useEffect } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { quizAPI } from "../services/api";
+import {
+  ArrowLeft,
+  CheckCircle,
+  XCircle,
+  RotateCcw,
+  AlertTriangle,
+} from "lucide-react";
 
 const Quiz = () => {
   const { id } = useParams();
@@ -23,13 +31,13 @@ const Quiz = () => {
       try {
         const [quizData, attemptsData] = await Promise.all([
           quizAPI.getQuizById(id),
-          quizAPI.getUserAttempts(id)
+          quizAPI.getUserAttempts(id),
         ]);
         setQuiz(quizData);
         setUserAttempts(attemptsData);
       } catch (error) {
-        console.error('Error fetching quiz data:', error);
-        navigate('/dashboard');
+        console.error("Error fetching quiz data:", error);
+        navigate("/dashboard");
       } finally {
         setLoading(false);
       }
@@ -48,7 +56,7 @@ const Quiz = () => {
     if (selectedAnswer !== null) {
       const newAnswers = [...answers, selectedAnswer];
       setAnswers(newAnswers);
-      
+
       if (currentQuestion < quiz.questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
         setSelectedAnswer(null);
@@ -66,12 +74,12 @@ const Quiz = () => {
       setScore(result.score);
       setShowResult(true);
     } catch (error) {
-      console.error('Error submitting quiz:', error);
+      console.error("Error submitting quiz:", error);
       if (error.response?.status === 429) {
-        alert('You have already used all 2 attempts for this quiz!');
-        navigate('/dashboard');
+        alert("You have already used all 2 attempts for this quiz!");
+        navigate("/dashboard");
       } else {
-        alert('Error submitting quiz. Please try again.');
+        alert("Error submitting quiz. Please try again.");
       }
     } finally {
       setSubmitting(false);
@@ -86,7 +94,7 @@ const Quiz = () => {
       setShowResult(false);
       setScore(0);
     } else {
-      alert('You have no attempts remaining for this quiz!');
+      alert("You have no attempts remaining for this quiz!");
     }
   };
 
@@ -102,8 +110,13 @@ const Quiz = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Quiz not found</h2>
-          <Link to="/dashboard" className="text-indigo-600 hover:text-indigo-700">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            Quiz not found
+          </h2>
+          <Link
+            to="/dashboard"
+            className="text-indigo-600 hover:text-indigo-700"
+          >
             Return to Dashboard
           </Link>
         </div>
@@ -133,19 +146,26 @@ const Quiz = () => {
               No Attempts Remaining
             </h2>
             <p className="text-gray-600 mb-6">
-              You have used all 2 attempts for this quiz. You cannot take this quiz again.
+              You have used all 2 attempts for this quiz. You cannot take this
+              quiz again.
             </p>
-            
+
             {userAttempts.attempts.length > 0 && (
               <div className="mt-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Previous Attempts:</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                  Your Previous Attempts:
+                </h3>
                 <div className="space-y-3">
                   {userAttempts.attempts.map((attempt, index) => (
                     <div key={index} className="bg-gray-50 p-4 rounded-lg">
                       <div className="flex justify-between items-center">
                         <span className="font-medium">Attempt {index + 1}</span>
                         <span className="text-lg font-bold text-indigo-600">
-                          {attempt.score}/{attempt.totalQuestions} ({Math.round((attempt.score / attempt.totalQuestions) * 100)}%)
+                          {attempt.score}/{attempt.totalQuestions} (
+                          {Math.round(
+                            (attempt.score / attempt.totalQuestions) * 100
+                          )}
+                          %)
                         </span>
                       </div>
                       <div className="text-sm text-gray-500 mt-1">
@@ -156,7 +176,7 @@ const Quiz = () => {
                 </div>
               </div>
             )}
-            
+
             <Link
               to="/dashboard"
               className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 mt-6"
@@ -172,34 +192,37 @@ const Quiz = () => {
 
   if (showResult) {
     const percentage = Math.round((score / quiz.questions.length) * 100);
-    
+
     return (
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-2xl mx-auto px-4">
           <div className="bg-white rounded-lg shadow-sm border p-8">
             <div className="text-center">
-              <div className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${
-                percentage >= 70 ? 'bg-green-100' : 'bg-red-100'
-              }`}>
+              <div
+                className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${
+                  percentage >= 70 ? "bg-green-100" : "bg-red-100"
+                }`}
+              >
                 {percentage >= 70 ? (
                   <CheckCircle className="h-10 w-10 text-green-600" />
                 ) : (
                   <XCircle className="h-10 w-10 text-red-600" />
                 )}
               </div>
-              
+
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
                 Quiz Completed!
               </h2>
-              
+
               <div className="text-6xl font-bold text-indigo-600 mb-4">
                 {percentage}%
               </div>
-              
+
               <p className="text-gray-600 mb-6">
-                You scored {score} out of {quiz.questions.length} questions correctly
+                You scored {score} out of {quiz.questions.length} questions
+                correctly
               </p>
-              
+
               <div className="flex justify-center space-x-4">
                 {userAttempts && userAttempts.attemptsRemaining > 0 ? (
                   <button
@@ -249,7 +272,13 @@ const Quiz = () => {
             {userAttempts && (
               <div className="text-sm text-gray-600">
                 <span className="font-medium">Attempts remaining: </span>
-                <span className={`font-bold ${userAttempts.attemptsRemaining === 1 ? 'text-yellow-600' : 'text-green-600'}`}>
+                <span
+                  className={`font-bold ${
+                    userAttempts.attemptsRemaining === 1
+                      ? "text-yellow-600"
+                      : "text-green-600"
+                  }`}
+                >
                   {userAttempts.attemptsRemaining}/2
                 </span>
               </div>
@@ -260,7 +289,9 @@ const Quiz = () => {
         {/* Progress Bar */}
         <div className="mb-6">
           <div className="flex justify-between text-sm text-gray-600 mb-2">
-            <span>Question {currentQuestion + 1} of {quiz.questions.length}</span>
+            <span>
+              Question {currentQuestion + 1} of {quiz.questions.length}
+            </span>
             <span>{Math.round(progress)}% Complete</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
@@ -276,7 +307,7 @@ const Quiz = () => {
           <h2 className="text-xl font-semibold text-gray-900 mb-6">
             {question.question}
           </h2>
-          
+
           <div className="space-y-3">
             {question.options.map((option, index) => (
               <button
@@ -284,22 +315,26 @@ const Quiz = () => {
                 onClick={() => handleAnswerSelect(index)}
                 className={`w-full text-left p-4 rounded-lg border-2 transition-colors ${
                   selectedAnswer === index
-                    ? 'border-indigo-500 bg-indigo-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? "border-indigo-500 bg-indigo-50"
+                    : "border-gray-200 hover:border-gray-300"
                 }`}
               >
                 <span className="font-medium text-gray-900">{option}</span>
               </button>
             ))}
           </div>
-          
+
           <div className="mt-8">
             <button
               onClick={handleNext}
               disabled={selectedAnswer === null || submitting}
               className="w-full py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {submitting ? 'Submitting...' : (currentQuestion < quiz.questions.length - 1 ? 'Next Question' : 'Finish Quiz')}
+              {submitting
+                ? "Submitting..."
+                : currentQuestion < quiz.questions.length - 1
+                ? "Next Question"
+                : "Finish Quiz"}
             </button>
           </div>
         </div>
