@@ -585,7 +585,7 @@ const Dashboard = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="text-center bg-white/5 rounded-xl p-4">
-              <div className="text-2xl font-bold text-white">32</div>
+              <div className="text-2xl font-bold text-white">5</div>
               <div className="text-blue-200">Total Students</div>
             </div>
             <div className="text-center bg-white/5 rounded-xl p-4">
@@ -693,19 +693,6 @@ const Dashboard = () => {
 
   const renderVideosView = () => {
     const videoLectures = [
-      {
-        id: 1,
-        title: "Climate Change: Understanding Global Warming",
-        instructor: "Dr. Sarah Johnson",
-        duration: "45 min",
-        thumbnail:
-          "https://images.unsplash.com/photo-1569163139394-de4e4f43e4e3?w=400&h=300&fit=crop",
-        category: "Climate Science",
-        rating: 4.8,
-        views: "12.5K",
-        description:
-          "Explore the science behind climate change and its global impacts",
-      },
       {
         id: 2,
         title: "Renewable Energy: Solar and Wind Power",
@@ -857,7 +844,7 @@ const Dashboard = () => {
                 <h3 className="text-lg font-semibold text-white">
                   Total Students
                 </h3>
-                <p className="text-3xl font-bold text-blue-300">32</p>
+                <p className="text-3xl font-bold text-blue-300">5</p>
               </div>
               <Users className="h-8 w-8 text-blue-400" />
             </div>
@@ -893,7 +880,7 @@ const Dashboard = () => {
                 <h3 className="text-lg font-semibold text-white">
                   Quiz Attempts
                 </h3>
-                <p className="text-3xl font-bold text-orange-300">156</p>
+                <p className="text-3xl font-bold text-orange-300">56</p>
               </div>
               <BarChart3 className="h-8 w-8 text-orange-400" />
             </div>
