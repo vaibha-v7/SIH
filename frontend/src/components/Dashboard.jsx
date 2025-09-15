@@ -35,6 +35,8 @@ import {
 } from "lucide-react";
 
 const Dashboard = () => {
+  const [showSortTrashGame, setShowSortTrashGame] = useState(false);
+  const [showGrowTreeGame, setShowGrowTreeGame] = useState(false);
   const { user, userRole, logout } = useAuth();
   const [quizzes, setQuizzes] = useState([]);
   const [todaysQuote, setTodaysQuote] = useState(null);
@@ -48,6 +50,8 @@ const Dashboard = () => {
     hoursUntilLoss: 0,
     isAtRisk: false,
   });
+  // Video modal state for video lectures
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
   const calculateStreak = () => {
     const lastActivity = localStorage.getItem("lastQuizActivity");
@@ -428,7 +432,7 @@ const Dashboard = () => {
       <h2 className="text-3xl font-bold text-white">Learning Games</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 group cursor-pointer">
+        {/* <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 group cursor-pointer">
           <div className="text-center space-y-4">
             <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-4 rounded-2xl mx-auto w-fit">
               <Gamepad2 className="h-8 w-8 text-white" />
@@ -439,6 +443,66 @@ const Dashboard = () => {
             </p>
             <button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300">
               Play Now
+            </button>
+          </div>
+        </div> */}
+
+        
+
+        
+
+         {/* Grow Your Tree Game Card */}
+         <div className="bg-white/10 backdrop-blur-xl border border-green-400/30 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 group text-center">
+           <img src="https://img.icons8.com/emoji/96/deciduous-tree-emoji.png" alt="Grow Your Tree Logo" className="mx-auto mb-4 w-20 h-20 rounded-full shadow" />
+           <h3 className="text-xl font-bold text-green-700 mb-2">Grow Your Tree</h3>
+           <p className="text-green-600 mb-4">Play and learn how trees grow!</p>
+           <button
+             className="bg-green-500 text-white font-semibold py-2 px-6 rounded-xl shadow hover:bg-green-600 transition-all duration-300"
+             onClick={() => setShowGrowTreeGame(true)}
+           >
+             Play
+           </button>
+         </div>
+        {/* Sort the Trash Game Card */}
+        <div className="bg-white/10 backdrop-blur-xl border border-yellow-400/30 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 group text-center">
+          <img src="https://img.icons8.com/emoji/96/wastebasket-emoji.png" alt="Sort the Trash Logo" className="mx-auto mb-4 w-20 h-20 rounded-full shadow" />
+          <h3 className="text-xl font-bold text-yellow-700 mb-2">Sort the Trash</h3>
+          <p className="text-yellow-600 mb-4">Play and learn how to sort waste!</p>
+          <button
+            className="bg-yellow-500 text-white font-semibold py-2 px-6 rounded-xl shadow hover:bg-yellow-600 transition-all duration-300"
+            onClick={() => setShowSortTrashGame(true)}
+          >
+            Play
+          </button>
+        </div>
+      {/* Modal for Sort the Trash Game */}
+      {showSortTrashGame && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+          <div className="bg-white rounded-xl shadow-lg p-8 relative w-full max-w-3xl flex flex-col items-center">
+            <button
+              className="absolute top-2 right-2 text-black text-xl font-bold"
+              onClick={() => setShowSortTrashGame(false)}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl font-bold mb-6 text-yellow-700">Sort the Trash Game</h2>
+            <iframe src="https://scratch.mit.edu/projects/1215200115/embed" allowtransparency="true" width="800" height="500" frameBorder="0" scrolling="no" allowFullScreen className="rounded-lg border mb-6"></iframe>
+            <p className="text-yellow-700 text-center">Interact with the game to learn how to sort trash correctly!</p>
+          </div>
+        </div>
+      )}
+          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 group cursor-pointer">
+          <div className="text-center space-y-4">
+            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-4 rounded-2xl mx-auto w-fit">
+              <Trophy className="h-8 w-8 text-white" />
+            </div>
+            <h3 className="text-xl font-bold text-white">Leaderboard</h3>
+            <p className="text-blue-200">
+              Compete for the top spot on the leaderboard
+            </p>
+            <button className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300">
+              View Rankings
             </button>
           </div>
         </div>
@@ -458,21 +522,29 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 group cursor-pointer">
-          <div className="text-center space-y-4">
-            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-4 rounded-2xl mx-auto w-fit">
-              <Trophy className="h-8 w-8 text-white" />
-            </div>
-            <h3 className="text-xl font-bold text-white">Leaderboard</h3>
-            <p className="text-blue-200">
-              Compete for the top spot on the leaderboard
-            </p>
-            <button className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300">
-              View Rankings
-            </button>
-          </div>
-        </div>
       </div>
+
+      {/* Modal for Grow Your Tree Game */}
+      {showGrowTreeGame && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+          <div className="bg-white rounded-xl shadow-lg p-8 relative w-full max-w-3xl flex flex-col items-center">
+            <button
+              className="absolute top-2 right-2 text-black text-xl font-bold"
+              onClick={() => setShowGrowTreeGame(false)}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl font-bold mb-6 text-green-700">Grow Your Tree Game</h2>
+            <iframe src="https://scratch.mit.edu/projects/1215616271/embed" allowtransparency="true" width="800" height="500" frameBorder="0" scrolling="no" allowFullScreen className="rounded-lg border mb-6"></iframe>
+            <p className="text-green-700 text-center">Interact with the game to learn how trees grow!</p>
+          </div>
+          
+        </div>
+        
+      )}
+
+      
     </div>
   );
 
@@ -651,7 +723,7 @@ const Dashboard = () => {
               <ChevronRight className="h-5 w-5 text-blue-300" />
             </Link>
 
-            <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+            {/* <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl">
               <div className="flex items-center space-x-3">
                 <Bell className="h-5 w-5 text-blue-400" />
                 <span className="text-white">Notifications</span>
@@ -664,7 +736,7 @@ const Dashboard = () => {
                 />
                 <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
               </label>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -692,47 +764,91 @@ const Dashboard = () => {
   );
 
   const renderVideosView = () => {
-    const videoLectures = [
+  const videoLectures = [
       {
         id: 2,
         title: "Renewable Energy: Solar and Wind Power",
         instructor: "Prof. Michael Chen",
-        duration: "38 min",
+        duration: "3 min",
         thumbnail:
           "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=400&h=300&fit=crop",
         category: "Renewable Energy",
         rating: 4.9,
         views: "8.2K",
         description: "Learn about sustainable energy solutions for the future",
+        videoUrl: "https://youtu.be/1kUE0BZtTRc?si=l-DvrAZ2EdZ0yVya",
       },
       {
         id: 3,
         title: "Biodiversity and Wildlife Conservation",
         instructor: "Dr. Emma Rodriguez",
-        duration: "52 min",
+        duration: "5 min",
         thumbnail:
           "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop",
         category: "Conservation",
         rating: 4.7,
         views: "15.3K",
         description: "Understanding ecosystem balance and species protection",
+        videoUrl: "https://youtu.be/GK_vRtHJZu4?si=WN_X9pK4TBExvO_q",
       },
       {
         id: 4,
         title: "Sustainable Living: Reduce, Reuse, Recycle",
         instructor: "Prof. David Kim",
-        duration: "30 min",
+        duration: "3 min",
         thumbnail:
           "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=400&h=300&fit=crop",
         category: "Sustainability",
         rating: 4.6,
         views: "9.8K",
         description: "Practical tips for environmentally conscious living",
+        videoUrl: "https://youtu.be/OasbYWF4_S8?si=yBu2vFKvz17cfGcf",
       },
     ];
 
     return (
       <div className="space-y-6">
+        {/* Video Modal */}
+        {selectedVideo && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+            <div className="bg-white rounded-xl shadow-lg p-6 relative w-full max-w-2xl">
+              <button
+                className="absolute top-2 right-2 text-black text-xl font-bold"
+                onClick={() => setSelectedVideo(null)}
+                aria-label="Close"
+              >
+                &times;
+              </button>
+              <h2 className="text-lg font-bold mb-4">{selectedVideo.title}</h2>
+              {/* Check if YouTube link */}
+              {selectedVideo.videoUrl.includes("youtube.com") || selectedVideo.videoUrl.includes("youtu.be") ? (
+                <iframe
+                  width="100%"
+                  height="360"
+                  src={
+                    selectedVideo.videoUrl.includes("youtube.com")
+                      ? selectedVideo.videoUrl.replace("watch?v=", "embed/")
+                      : `https://www.youtube.com/embed/${selectedVideo.videoUrl.split("/").pop().split("?")[0]}`
+                  }
+                  title={selectedVideo.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full rounded-lg mb-4"
+                />
+              ) : (
+                <video
+                  src={selectedVideo.videoUrl}
+                  controls
+                  autoPlay
+                  className="w-full h-64 bg-black rounded-lg mb-4"
+                />
+              )}
+              <p className="text-gray-700 mb-2">{selectedVideo.description}</p>
+              <span className="text-sm text-gray-500">Instructor: {selectedVideo.instructor}</span>
+            </div>
+          </div>
+        )}
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold text-white">
             Environmental Studies Video Lectures
@@ -753,6 +869,7 @@ const Dashboard = () => {
             <div
               key={video.id}
               className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden hover:bg-white/15 transition-all duration-300 group cursor-pointer"
+              onClick={() => setSelectedVideo(video)}
             >
               <div className="relative">
                 <img
@@ -839,7 +956,37 @@ const Dashboard = () => {
         {/* Admin Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-gradient-to-r from-blue-500/20 to-indigo-500/20 backdrop-blur-xl border border-blue-400/30 rounded-2xl p-6">
+           {/* Sort the Trash Game Card */}
+           <div className="bg-white/10 backdrop-blur-xl border border-yellow-400/30 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 group text-center">
+             <img src="https://img.icons8.com/emoji/96/wastebasket-emoji.png" alt="Sort the Trash Logo" className="mx-auto mb-4 w-20 h-20 rounded-full shadow" />
+             <h3 className="text-xl font-bold text-yellow-700 mb-2">Sort the Trash</h3>
+             <p className="text-yellow-600 mb-4">Play and learn how to sort waste!</p>
+             <button
+               className="bg-yellow-500 text-white font-semibold py-2 px-6 rounded-xl shadow hover:bg-yellow-600 transition-all duration-300"
+               onClick={() => setShowSortTrashGame(true)}
+             >
+               Play
+             </button>
+           </div>
             <div className="flex items-center justify-between">
+
+        {/* Modal for Sort the Trash Game */}
+        {showSortTrashGame && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+            <div className="bg-white rounded-xl shadow-lg p-8 relative w-full max-w-3xl flex flex-col items-center">
+              <button
+                className="absolute top-2 right-2 text-black text-xl font-bold"
+                onClick={() => setShowSortTrashGame(false)}
+                aria-label="Close"
+              >
+                &times;
+              </button>
+              <h2 className="text-2xl font-bold mb-6 text-yellow-700">Sort the Trash Game</h2>
+              <iframe src="https://scratch.mit.edu/projects/1215200115/embed" allowtransparency="true" width="800" height="500" frameBorder="0" scrolling="no" allowFullScreen className="rounded-lg border mb-6"></iframe>
+              <p className="text-yellow-700 text-center">Interact with the game to learn how to sort trash correctly!</p>
+            </div>
+          </div>
+        )}
               <div>
                 <h3 className="text-lg font-semibold text-white">
                   Total Students
