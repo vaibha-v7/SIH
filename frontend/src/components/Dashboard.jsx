@@ -956,37 +956,7 @@ const Dashboard = () => {
         {/* Admin Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-gradient-to-r from-blue-500/20 to-indigo-500/20 backdrop-blur-xl border border-blue-400/30 rounded-2xl p-6">
-           {/* Sort the Trash Game Card */}
-           <div className="bg-white/10 backdrop-blur-xl border border-yellow-400/30 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 group text-center">
-             <img src="https://img.icons8.com/emoji/96/wastebasket-emoji.png" alt="Sort the Trash Logo" className="mx-auto mb-4 w-20 h-20 rounded-full shadow" />
-             <h3 className="text-xl font-bold text-yellow-700 mb-2">Sort the Trash</h3>
-             <p className="text-yellow-600 mb-4">Play and learn how to sort waste!</p>
-             <button
-               className="bg-yellow-500 text-white font-semibold py-2 px-6 rounded-xl shadow hover:bg-yellow-600 transition-all duration-300"
-               onClick={() => setShowSortTrashGame(true)}
-             >
-               Play
-             </button>
-           </div>
             <div className="flex items-center justify-between">
-
-        {/* Modal for Sort the Trash Game */}
-        {showSortTrashGame && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-            <div className="bg-white rounded-xl shadow-lg p-8 relative w-full max-w-3xl flex flex-col items-center">
-              <button
-                className="absolute top-2 right-2 text-black text-xl font-bold"
-                onClick={() => setShowSortTrashGame(false)}
-                aria-label="Close"
-              >
-                &times;
-              </button>
-              <h2 className="text-2xl font-bold mb-6 text-yellow-700">Sort the Trash Game</h2>
-              <iframe src="https://scratch.mit.edu/projects/1215200115/embed" allowtransparency="true" width="800" height="500" frameBorder="0" scrolling="no" allowFullScreen className="rounded-lg border mb-6"></iframe>
-              <p className="text-yellow-700 text-center">Interact with the game to learn how to sort trash correctly!</p>
-            </div>
-          </div>
-        )}
               <div>
                 <h3 className="text-lg font-semibold text-white">
                   Total Students
