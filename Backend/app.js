@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/User');
 const Quiz = require('./models/Quiz');
 const Quote = require('./models/Quote');
+const url = process.env.FRONTEND_URL;
 
 const app = express();
 app.use(express.json());
@@ -14,8 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Enable CORS for frontend
 const allowedOrigins = [
-  'http://localhost:5173',
-  'https://sih-cflwodkbr-vaibhav-patels-projects-c7ef59ce.vercel.app'
+  'http://localhost:5173',url
+  
 ];
 
 app.use((req, res, next) => {
