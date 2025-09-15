@@ -62,6 +62,10 @@ function requireStudent(req, res, next) {
   next();
 }
 
+app.get('/', (req, res) => {
+  res.send('Backend server is running!');
+});
+
 
 app.post('/auth/register', async (req, res) => {
   const { username, email, password, role } = req.body;
