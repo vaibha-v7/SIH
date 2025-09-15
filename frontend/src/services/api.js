@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = 'https://sih-besy.onrender.com/';
 
 // Quiz API functions
 export const quizAPI = {
