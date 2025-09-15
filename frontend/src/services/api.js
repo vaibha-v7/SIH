@@ -1,30 +1,30 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.API_BASE_URL || 'http://localhost:5000';
+const URL = import.meta.env.API_BASE_URL || 'http://localhost:5000';
 
 // Quiz API functions
 export const quizAPI = {
   // Get all quizzes
   getAllQuizzes: async () => {
-    const response = await axios.get(`${API_BASE_URL}/quiz`);
+    const response = await axios.get(`${URL}/quiz`);
     return response.data;
   },
 
   // Get quiz by ID
   getQuizById: async (id) => {
-    const response = await axios.get(`${API_BASE_URL}/quiz/${id}`);
+    const response = await axios.get(`${URL}/quiz/${id}`);
     return response.data;
   },
 
   // Create new quiz
   createQuiz: async (quizData) => {
-    const response = await axios.post(`${API_BASE_URL}/quiz`, quizData);
+    const response = await axios.post(`${URL}/quiz`, quizData);
     return response.data;
   },
 
   // Submit quiz attempt
   submitQuizAttempt: async (quizId, answers) => {
-    const response = await axios.post(`${API_BASE_URL}/quiz/${quizId}/attempt`, {
+    const response = await axios.post(`${URL}/quiz/${quizId}/attempt`, {
       answers
     });
     return response.data;
@@ -32,7 +32,7 @@ export const quizAPI = {
 
   // Get user's attempts for a quiz
   getUserAttempts: async (quizId) => {
-    const response = await axios.get(`${API_BASE_URL}/quiz/${quizId}/attempts`);
+    const response = await axios.get(`${URL}/quiz/${quizId}/attempts`);
     return response.data;
   }
 };
@@ -41,13 +41,13 @@ export const quizAPI = {
 export const adminAPI = {
   // Get all student progress
   getStudentProgress: async () => {
-    const response = await axios.get(`${API_BASE_URL}/admin/student-progress`);
+    const response = await axios.get(`${URL}/admin/student-progress`);
     return response.data;
   },
 
   // Get quiz statistics
   getQuizStats: async () => {
-    const response = await axios.get(`${API_BASE_URL}/admin/quiz-stats`);
+    const response = await axios.get(`${URL}/admin/quiz-stats`);
     return response.data;
   }
 };
@@ -56,13 +56,13 @@ export const adminAPI = {
 export const quoteAPI = {
   // Get today's quote
   getTodaysQuote: async () => {
-    const response = await axios.get(`${API_BASE_URL}/quote`);
+    const response = await axios.get(`${URL}/quote`);
     return response.data;
   },
 
   // Create new quote
   createQuote: async (quoteData) => {
-    const response = await axios.post(`${API_BASE_URL}/quote`, quoteData);
+    const response = await axios.post(`${URL}/quote`, quoteData);
     return response.data;
   }
 };
