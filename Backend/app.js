@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 // Enable CORS for frontend
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://sih-l58itpb1e-vaibhav-patels-projects-c7ef59ce.vercel.app'
+  'https://sih-cflwodkbr-vaibhav-patels-projects-c7ef59ce.vercel.app'
 ];
 
 app.use((req, res, next) => {
