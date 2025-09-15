@@ -1,3 +1,4 @@
+const API_BASE_URL = "https://sih-besy.onrender.com";
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -31,7 +32,7 @@ export const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       if (token) {
         try {
-          const response = await axios.get('http://localhost:5000/profile');
+          const response = await axios.get(`${API_BASE_URL}/profile`);
           setUser(response.data);
           // Set user role from localStorage if available
           const storedRole = localStorage.getItem('userRole');
@@ -51,7 +52,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       console.log('Attempting login with:', { email });
-      const response = await axios.post('http://localhost:5000/auth/login', {
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
         email,
         password
       });
@@ -64,7 +65,7 @@ export const AuthProvider = ({ children }) => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
       
       // Fetch user profile
-      const profileResponse = await axios.get('http://localhost:5000/profile');
+  const profileResponse = await axios.get(`${API_BASE_URL}/profile`);
       console.log('Profile response:', profileResponse.data);
       setUser(profileResponse.data);
       return { success: true, role };
@@ -83,7 +84,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (username, email, password, role) => {
     try {
       console.log('Attempting registration with:', { username, email, role });
-      const response = await axios.post('http://localhost:5000/auth/register', {
+      const response = await axios.post(`${API_BASE_URL}/auth/register`, {
         username,
         email,
         password,
@@ -111,7 +112,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateProfile = async (profileData) => {
     try {
-      const response = await axios.put('http://localhost:5000/profile', profileData);
+  const response = await axios.put(`${API_BASE_URL}/profile`, profileData);
       setUser(response.data);
       return { success: true };
     } catch (error) {
