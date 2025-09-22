@@ -8,6 +8,7 @@ const User = require('./models/User');
 const Quiz = require('./models/Quiz');
 const Quote = require('./models/Quote');
 const url = process.env.FRONTEND_URL;
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
